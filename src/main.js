@@ -6,9 +6,12 @@ import router from './router'
 import Vuex from 'vuex'
 import store from './store/store'
 import axios from 'axios'
+import iView from 'iview'
+import 'iview/dist/styles/iview.css'
 
 Vue.config.productionTip = false
 Vue.use(Vuex)
+Vue.use(iView)
 Vue.prototype.$http = axios
 
 /* eslint-disable no-new */
