@@ -1,4 +1,4 @@
-# vueinit
+# vueInit
 
 > Initial project
 
