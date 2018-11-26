@@ -1,49 +1,39 @@
 <template>
   <div class="layout">
-    <Layout>
-      <Header>
-        <Menu mode="horizontal" theme="dark" active-name="1">
-          <div class="layout-logo"></div>
-          <div class="layout-nav">
-            <MenuItem name="1">
-              <Icon type="ios-navigate"></Icon>
-              Item 1
-            </MenuItem>
-            <MenuItem name="2">
-              <Icon type="ios-keypad"></Icon>
-              Item 2
-            </MenuItem>
-            <MenuItem name="3">
-              <Icon type="ios-analytics"> </Icon>
-              Item 3
-            </MenuItem>
-            <MenuItem name="4">
-              <Icon type="ios-paper"></Icon>
-              Item 4
-            </MenuItem>
-          </div>
-        </Menu>
-      </Header>
-      <Content :style="{padding: '0 50px'}">
-        <Breadcrumb :style="{margin: '20px 0'}">
-          <BreadcrumbItem>Home</BreadcrumbItem>
-          <BreadcrumbItem>Components</BreadcrumbItem>
-          <BreadcrumbItem>Layout</BreadcrumbItem>
-        </Breadcrumb>
-        <Card>
-          <div style="min-height: 200px;">
-            Content
-          </div>
-        </Card>
-      </Content>
-      <Footer class="layout-footer-center">2011-2016 &copy; TalkingData</Footer>
-    </Layout>
+    <Input v-model="playerName1" @on-change="ModifyName" placeholder="Enter name..." style="width: 300px" ></Input>
+    <Input v-model="playerName" placeholder="Enter name..." style="width: 300px" ></Input>
+    <Input v-model="playerName2" placeholder="Enter name..." style="width: 300px" ></Input>
   </div>
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex'
 export default {
-  name: 'Home'
+  name: 'Home',
+  data () {
+    return {
+      playerName1: '',
+      playerName2: ''
+    }
+  },
+  computed: {
+    ...mapGetters([
+      'playerName'
+    ])
+  },
+  watch: {
+    playerName: function () {
+      this.playerName2 = this.playerName
+    }
+  },
+  methods: {
+    ...mapActions([
+      'setPlayerName'
+    ]),
+    ModifyName: function () {
+      this.setPlayerName(this.playerName1)
+    }
+  }
 }
 </script>
 

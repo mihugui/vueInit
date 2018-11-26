@@ -1,5 +1,5 @@
-const DEMONAME = 'DEMONAME'
+const SETPLAYERNAME = 'SETPLAYERNAME'
 
 export default {
-  DEMONAME
+  SETPLAYERNAME
 }
