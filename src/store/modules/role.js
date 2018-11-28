@@ -1,5 +1,7 @@
 import types from '../types'
 const state = {
+  // 角色唯一编号
+  id: '',
   // 角色名称
   roleName: '',
   // 角色状态

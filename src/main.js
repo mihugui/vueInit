@@ -7,12 +7,14 @@ import Vuex from 'vuex'
 import store from './store/store'
 import axios from 'axios'
 import iView from 'iview'
+import base from './utils/base'
 import 'iview/dist/styles/iview.css'
 
 Vue.config.productionTip = false
 Vue.use(Vuex)
 Vue.use(iView)
 Vue.prototype.$http = axios
+Vue.prototype.$base = base
 
 /* eslint-disable no-new */
 new Vue({
