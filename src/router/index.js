@@ -1,15 +1,36 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import home from '@/components/Home'
+import Welcome from '@/components/Welcome'
+import Main from '@/components/Main'
+import Role from '@/components/Role'
 
 Vue.use(Router)
 
-export default new Router({
+const router = new Router({
   routes: [
     {
       path: '/',
-      name: 'Home',
-      component: home
+      name: 'Welcome',
+      component: Welcome
+    },
+    {
+      path: '/main',
+      name: 'Main',
+      redirect: 'main/role',
+      component: Main,
+      children: [
+        {
+          path: 'role',
+          component: Role
+        }
+      ]
     }
   ]
 })
+
+router.beforeEach((to, from, next) => {
+  console.log('跳转')
+  next()
+})
+
+export default router

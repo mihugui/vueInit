@@ -1,7 +1,7 @@
 import types from '../types'
 const state = {
   // 角色名称
-  playerName: '',
+  roleName: '',
   // 角色状态
   condition: {
     // 生命
@@ -15,8 +15,8 @@ const state = {
     passive: [],
     // 主动
     active: []
-  }
-
+  },
+  isExist: false
 }
 
 // 定义 getters
@@ -24,8 +24,8 @@ var getters = {
   condition (state) {
     return state.condition
   },
-  playerName (state) {
-    return state.playerName
+  roleName (state) {
+    return state.roleName
   }
 }
 
