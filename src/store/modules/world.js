@@ -11,7 +11,8 @@ const state = {
           type: ''
         }]
     }
-  ]
+  ],
+  data: []
 
 }
 

@@ -4,7 +4,8 @@
       <div style="text-align:center">
         <Steps :current="step">
           <Step title="第一步" content="请输入角色名称"></Step>
-          <Step title="第二步" content="请选择天赋"></Step>
+          <Step title="第二步" content="请选择年龄"></Step>
+          <Step title="第三步" content="请选择天赋"></Step>
         </Steps>
         <br>
         <div v-if="step===0">
@@ -12,7 +13,7 @@
           <br>
           <div>
             <Form ref="formStepOne" :model="role" :rules="ruleValidate">
-              <FormItem label="角色名称" prop="roleName">
+              <FormItem prop="roleName">
                 <Input v-model="role.roleName" prefix="ios-contact" placeholder="请输入角色名称" style="width: auto" />
               </FormItem>
             </Form>
@@ -21,10 +22,29 @@
           <Button type="primary" @click="next">下一步</Button>
         </div>
         <div v-if="step===1">
-          <Alert>请选择属性</Alert>
+          <Alert>请选择年龄</Alert>
           <br>
           <div>
-
+            <Slider v-model="role.age" show-input :min="10" :max="20"></Slider>
+          </div>
+          <br>
+          <Button type="primary" @click="previous">上一步</Button>
+          <Button type="primary" @click="next">下一步</Button>
+        </div>
+        <div v-if="step===2">
+          <Alert>请选择天赋</Alert>
+          <br>
+          <div>
+            <Form ref="formStepThree" :model="role" :rules="ruleValidate">
+              <FormItem prop="passive">
+                <CheckboxGroup v-model="role.skill.passive">
+                  <Checkbox label="Eat"></Checkbox>
+                  <Checkbox label="Sleep"></Checkbox>
+                  <Checkbox label="Run"></Checkbox>
+                  <Checkbox label="Movie"></Checkbox>
+                </CheckboxGroup>
+              </FormItem>
+            </Form>
           </div>
           <br>
           <Button type="primary" @click="previous">上一步</Button>
@@ -38,29 +58,59 @@
 <script>
 export default {
   name: 'RoleCreate',
-  data () {
+  data: function () {
     return {
       role: {
         id: '',
-        roleName: ''
+        roleName: '',
+        age: 15,
+        skill: {
+          // 被动
+          passive: [],
+          // 主动
+          active: []
+        }
       },
       ruleValidate: {
         roleName: [
-          {required: true, message: '角色名称不能为空', trigger: 'blur'}
+          {required: true, message: ' ', trigger: 'blur'}
+        ],
+        passive: [
+          { required: true, type: 'array', min: 1, message: 'Choose at least one hobby', trigger: 'change' },
+          { type: 'array', max: 2, message: 'Choose two hobbies at best', trigger: 'change' }
         ]
       },
       step: 0
     }
   },
   methods: {
-    next () {
-      this.step++
+    next: function () {
+      switch (this.step) {
+        case 0:
+          if (this.isValidate('formStepOne')) {
+            this.step++
+          } else {
+            this.$Message.error('用户名必须填写')
+          }
+          break
+        default:
+          this.step++
+          break
+      }
     },
     previous () {
       this.step--
     },
     setId () {
       this.role.id = this.$base.guid()
+    },
+    isValidate (name) {
+      let result
+      this.$refs[name].validate((valid) => {
+        result = valid
+      })
+
+      return result
     }
   },
   created () {
