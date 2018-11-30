@@ -6,6 +6,7 @@ const state = {
       id: '1001',
       name: '主动技能1',
       type: 0,
+      level: 0,
       dmg: 10,
       // 技能效果作用对象 0:角色 1:背包 等其他效果
       effect: [
@@ -28,7 +29,7 @@ const state = {
     {
       id: '2001',
       name: 'poison',
-      effect:[
+      effect: [
         {
           attr: ''
         }
