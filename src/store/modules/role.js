@@ -4,6 +4,8 @@ const state = {
   id: '',
   // 角色名称
   roleName: '',
+  // 级别
+  level: 0,
   // 角色状态
   condition: {
     // 生命
