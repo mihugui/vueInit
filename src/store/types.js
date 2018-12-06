@@ -1,5 +1,7 @@
 const SETROLENAME = 'SETROLENAME'
+const SETROLES = 'SETROLES'
 
 export default {
-  SETROLENAME
+  SETROLENAME,
+  SETROLES
 }

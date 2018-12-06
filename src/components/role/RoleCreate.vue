@@ -1,11 +1,10 @@
 <template>
   <div>
-    <Card>
+    <Card :dis-hover="true">
       <div style="text-align:center">
         <Steps :current="step">
           <Step title="第一步" content="请输入角色名称"></Step>
           <Step title="第二步" content="请选择年龄"></Step>
-          <Step title="第三步" content="请选择天赋"></Step>
         </Steps>
         <br>
         <div v-if="step===0">
@@ -25,11 +24,11 @@
           <Alert>请选择年龄</Alert>
           <br>
           <div>
-            <Slider v-model="role.age" show-input :min="10" :max="20"></Slider>
+            <Slider v-model="role.age.real" show-input :min="10" :max="20"></Slider>
           </div>
           <br>
           <Button type="primary" @click="previous">上一步</Button>
-          <Button type="primary" @click="next">下一步</Button>
+          <Button type="primary" @click="save">保存</Button>
         </div>
         <div v-if="step===2">
           <Alert>请选择天赋</Alert>
@@ -38,10 +37,10 @@
             <Form ref="formStepThree" :model="role" :rules="ruleValidate">
               <FormItem prop="passive">
                 <CheckboxGroup v-model="role.skill.passive">
-                  <Checkbox label="Eat"></Checkbox>
-                  <Checkbox label="Sleep"></Checkbox>
-                  <Checkbox label="Run"></Checkbox>
-                  <Checkbox label="Movie"></Checkbox>
+                  <Checkbox label="0001">福寿延长</Checkbox>
+                  <Checkbox label="Sleep">123</Checkbox>
+                  <Checkbox label="Run">123</Checkbox>
+                  <Checkbox label="Movie">123</Checkbox>
                 </CheckboxGroup>
               </FormItem>
             </Form>
@@ -56,6 +55,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 export default {
   name: 'RoleCreate',
   data: function () {
@@ -63,7 +63,10 @@ export default {
       role: {
         id: '',
         roleName: '',
-        age: 15,
+        age: {
+          max: 100,
+          real: 0
+        },
         skill: {
           // 被动
           passive: [],
@@ -84,6 +87,9 @@ export default {
     }
   },
   methods: {
+    ...mapActions({
+      saveRole: 'saveRole'
+    }),
     next: function () {
       switch (this.step) {
         case 0:
@@ -101,6 +107,9 @@ export default {
     previous () {
       this.step--
     },
+    save () {
+      this.saveRole(this.role)
+    },
     setId () {
       this.role.id = this.$base.guid()
     },
@@ -115,6 +124,8 @@ export default {
   },
   created () {
     this.setId()
+  },
+  props: {
   }
 }
 </script>

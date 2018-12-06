@@ -5,48 +5,56 @@
       </div>
     </Card>
     <Modal v-model="roleList" footer-hide :mask-closable="false" :closable="false" title="角色列表">
-      <div>
-        <Row style="background:#FFF;padding:20px">
-          <Col span="11">
-            <Card @click="test">
-              <div style="text-align:center">
-                <a href="#" slot="extra" @click.prevent="creatRole">
-                  <Icon type="md-add" />
-                  创建新角色
-                </a>
-              </div>
-            </Card>
-          </Col>
-        </Row>
-      </div>
+        <role-list :roles="roles" :creatRole="creatRole" ></role-list>
+    </Modal>
+    <Modal v-model="roleCreate" footer-hide :mask-closable="false" :closable="false" title="角色创建">
+      <role-create></role-create>
     </Modal>
   </div>
 </template>
 
 <script>
+import RoleList from '@/components/role/RoleList'
+import RoleCreate from '@/components/role/RoleCreate'
+import { mapMutations, mapGetters } from 'vuex'
+import types from '../../store/types'
 export default {
   name: 'Role',
   data () {
     return {
-      roleList: false
+      roleList: false,
+      roleCreate: false
     }
   },
+  computed: {
+    ...mapGetters({
+      roles: 'roles'
+    })
+  },
   methods: {
+    ...mapMutations({
+      setRoles: types.SETROLES
+    }),
     showSave: function () {
-      let roleSave = localStorage.getItem('roleSaveOfMyWorld')
-      if (roleSave === null) {
+      let roleSave = JSON.parse(localStorage.getItem('roleSaveOfMyWorld'))
+      if (roleSave.length === 0) {
+        this.roleList = true
+      } else {
+        this.setRoles(roleSave)
         this.roleList = true
       }
     },
     creatRole: function () {
       this.roleList = false
-    },
-    test: function () {
-      console.log('success')
+      this.roleCreate = true
     }
   },
   created () {
     this.showSave()
+  },
+  components: {
+    RoleList,
+    RoleCreate
   }
 }
 </script>
