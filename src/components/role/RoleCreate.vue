@@ -109,6 +109,7 @@ export default {
     },
     save () {
       this.saveRole(this.role)
+      this.saveSure()
     },
     setId () {
       this.role.id = this.$base.guid()
@@ -125,8 +126,7 @@ export default {
   created () {
     this.setId()
   },
-  props: {
-  }
+  props: {saveSure: {type: Function}}
 }
 </script>
 

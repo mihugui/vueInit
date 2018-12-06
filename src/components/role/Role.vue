@@ -8,7 +8,7 @@
         <role-list :roles="roles" :creatRole="creatRole" ></role-list>
     </Modal>
     <Modal v-model="roleCreate" footer-hide :mask-closable="false" :closable="false" title="角色创建">
-      <role-create></role-create>
+        <role-create :saveSure="saveRole"></role-create>
     </Modal>
   </div>
 </template>
@@ -37,6 +37,9 @@ export default {
     }),
     showSave: function () {
       let roleSave = JSON.parse(localStorage.getItem('roleSaveOfMyWorld'))
+      if (roleSave === null) {
+        roleSave = []
+      }
       if (roleSave.length === 0) {
         this.roleList = true
       } else {
@@ -47,6 +50,10 @@ export default {
     creatRole: function () {
       this.roleList = false
       this.roleCreate = true
+    },
+    saveRole: function () {
+      this.roleList = true
+      this.roleCreate = false
     }
   },
   created () {
