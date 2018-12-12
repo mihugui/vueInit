@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import {mapGetters, mapActions} from 'vuex'
 export default {
   name: 'HelloWorld',
   data () {
@@ -13,10 +13,18 @@ export default {
       msg: 'Welcome to Your Vue.js App'
     }
   },
+  methods: {
+    ...mapActions({
+      httptest: 'httptest'
+    })
+  },
   computed: {
     ...mapGetters({
       demoName: 'isEvenOrOdd'
     })
+  },
+  mounted () {
+    this.httptest()
   }
 }
 </script>

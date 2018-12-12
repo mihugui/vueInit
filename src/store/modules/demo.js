@@ -1,4 +1,5 @@
 import types from '../types'
+import http from '../../utils/http'
 
 const state = {
   demo: 5
@@ -12,6 +13,13 @@ var getters = {
 }
 
 const actions = {
+  httptest () {
+    http.post('/validateCode', {random: 4}).then(function (response) {
+      // response.data中获取ResponseData实体
+    }, function (response) {
+      // 发生错误
+    })
+  }
 }
 
 const mutations = {
